@@ -1,0 +1,1 @@
+Simple Python Scrip to hook an endpoint with a discord webhook.
