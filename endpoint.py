@@ -1,6 +1,5 @@
 import requests
 from flask import Flask, request
-from datetime import datetime
 import sqlite3
 import configparser
 import os
