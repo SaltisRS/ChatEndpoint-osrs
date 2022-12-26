@@ -9,6 +9,6 @@ def num_cpus():
 def max_workers():
     return (num_cpus() * 2) + 1
 
-bind = "0.0.0.0:{5000}"
+bind = "194.233.173.32:5000"
 workers = max_workers()
 timeout = 300

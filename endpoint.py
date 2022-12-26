@@ -12,14 +12,15 @@ if not os.path.exists("config.ini"):
     # If the config.ini file does not exist, prompt for the Discord webhook URL and the port number
     discord_webhook_url = input("Enter the Discord webhook URL: ")
     port = input("Enter the port number: ")
+    host = input("Enter host ip address to bind")
 
     # Create the config.ini file
     config = configparser.ConfigParser()
 
-    # Add the Discord webhook URL and port number to the config.ini file
+    # Add the Discord webhook URL and port number + host IP to the config.ini file
     config["SECRETS"] = {"DISCORD_WEBHOOK_URL": discord_webhook_url}
     config["SETTINGS"] = {"PORT": port}
-
+    config["SETTINGS"] = {"HOST": host}
     # Write the config.ini file
     with open("config.ini", "w") as config_file:
         config.write(config_file)
@@ -28,9 +29,10 @@ if not os.path.exists("config.ini"):
 config = configparser.ConfigParser()
 config.read("config.ini")
 
-# Get the Discord webhook URL and port number from the config.ini file
+# Get the Discord webhook URL and port number + Host IP from the config.ini file
 DISCORD_WEBHOOK_URL = config["SECRETS"]["DISCORD_WEBHOOK_URL"]
 PORT = config["SETTINGS"]["PORT"]
+HOST = config["SETTINGS"]["HOST"]
 
 @app.route('/', methods=['POST'])
 def send_message_to_discord():
@@ -79,4 +81,4 @@ def send_message_to_discord():
     return 'Messages sent to Discord successfully!'
 
 if __name__ == '__main__':
-    app.run(port=PORT)
+    app.run(host=HOST, port=PORT)
