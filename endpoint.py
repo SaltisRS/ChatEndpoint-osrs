@@ -4,6 +4,7 @@ import sqlite3
 import configparser
 import os
 
+
 app = Flask(__name__)
 
 # Check if the config.ini file exists
