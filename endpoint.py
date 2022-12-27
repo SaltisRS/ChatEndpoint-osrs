@@ -4,7 +4,6 @@ import sqlite3
 import configparser
 import os
 
-
 app = Flask(__name__)
 
 # Check if the config.ini file exists
@@ -12,7 +11,6 @@ if not os.path.exists("config.ini"):
     # If the config.ini file does not exist, prompt for the Discord webhook URL and the port number
     discord_webhook_url = input("Enter the Discord webhook URL: ")
     port = input("Enter the port number: ")
-
     # Create the config.ini file
     config = configparser.ConfigParser()
 
@@ -69,8 +67,13 @@ def send_message_to_discord():
         # Format the message to send to Discord
         discord_message = f"{sender}: {message_text}"
 
-        # Send the message to the Discord webhook
-        requests.post(DISCORD_WEBHOOK_URL, json={'content': discord_message})
+        try:
+            # Send the message to the Discord webhook
+            requests.post(DISCORD_WEBHOOK_URL, json={'content': discord_message})
+        except requests.exceptions.RequestException as e:
+            # If there was an error sending the request, log the error and continue to the next message
+            print(f"Error sending message to Discord: {e}")
+            continue
 
     # Close the database connection
     conn.close()
