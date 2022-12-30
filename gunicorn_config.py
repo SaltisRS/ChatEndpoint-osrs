@@ -1,4 +1,5 @@
 import os
+import configparser
 
 def num_cpus():
     try:
@@ -9,7 +10,15 @@ def num_cpus():
 def max_workers():
     return (num_cpus() * 2) + 1
 
+# Read configuration file
+config = configparser.ConfigParser()
+config.read('config.ini')
+
+# Set bind variable from configuration file
+ip = config['SETTINGS']['ip']
+port = config['SETTINGS']['port']
+bind = f"{ip}:{port}"
+
 logfile = "gunicorn.log"
-bind = "194.233.173.32:5000"
 workers = max_workers()
 timeout = 300
