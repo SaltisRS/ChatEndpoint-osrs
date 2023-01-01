@@ -15,9 +15,8 @@ config = configparser.ConfigParser()
 config.read('config.ini')
 
 # Set bind variable from configuration file
-ip = config['SETTINGS']['ip']
 port = config['SETTINGS']['port']
-bind = f"{ip}:{port}"
+bind = f"0.0.0.0:{port}"
 
 logfile = "gunicorn.log"
 workers = max_workers()
